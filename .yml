@@ -1,0 +1,27 @@
+name: Code Review
+
+permissions:
+  contents: read
+  pull-requests: write
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: anc95/ChatGPT-CodeReview@main
+        env:
+          GITHUB_TOKEN: ${{ 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 }}
+          OPENAI_API_KEY: ${{ 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 }}
+          LANGUAGE: English
+          OPENAI_API_ENDPOINT: https://api.openai.com/v1
+          MODEL: gpt-3.5-turbo-16k 
+          PROMPT: 您是一名中級 iOS 開發人員。檢查以下僅 .swift 檔案的差異，以便 Swift 編碼並告訴我是否需要更改屬性或類別的存取控制級別，或者某處缺少最終關鍵字。如果不是，你感謝我。請客氣地說一句話。
+          MAX_PATCH_LENGTH: 10000 # if the patch/diff length is large than MAX_PATCH_LENGTH, will be ignored and won't review. By default, with no MAX_PATCH_LENGTH set, there is also no limit for the patch/diff length.
+          top_p: 1 
+          temperature: 1 
+          max_tokens: 10000
+          MAX_PATCH_LENGTH: 10000 
